@@ -74,7 +74,7 @@
 				<executions>
 					<execution>
 						<id>docker-clean</id>
-						<phase>deploy</phase>
+						<phase>install</phase>
 						<goals>
 							<goal>exec</goal>
 						</goals>
@@ -89,7 +89,7 @@
 					</execution>
 					<execution>
 						<id>docker-build</id>
-						<phase>deploy</phase>
+						<phase>install</phase>
 						<goals>
 							<goal>exec</goal>
 						</goals>
@@ -106,7 +106,7 @@
 					</execution>
 					 <execution>
       <id>docker-login</id>
-      <phase>deploy</phase>
+      <phase>install</phase>
       <goals>
         <goal>exec</goal>
       </goals>
@@ -125,7 +125,7 @@
     </execution>
     <execution>
       <id>docker-push</id>
-      <phase>deploy</phase>
+      <phase>install</phase>
       <goals>
         <goal>exec</goal>
       </goals>
