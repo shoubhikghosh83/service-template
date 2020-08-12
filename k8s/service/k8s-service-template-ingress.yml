@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: service-template-ingress
+  namespace: service-namespace
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /service-template
+            backend:
+              serviceName: service-template
+              servicePort: 8080
