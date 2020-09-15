@@ -60,6 +60,12 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-contract-verifier</artifactId>
+			<version>2.2.4.RELEASE</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -72,21 +78,11 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<executions>
-					<!-- <execution>
-						<id>docker-clean</id>
-						<phase>install</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<executable>docker</executable>
-							<workingDirectory>${project.basedir}</workingDirectory>
-							<arguments>
-								<argument>rmi</argument>
-								<argument>${docker.user}/service-template:${project.version}</argument>
-							</arguments>
-						</configuration>
-					</execution> -->
+					<!-- <execution> <id>docker-clean</id> <phase>install</phase> <goals> 
+						<goal>exec</goal> </goals> <configuration> <executable>docker</executable> 
+						<workingDirectory>${project.basedir}</workingDirectory> <arguments> <argument>rmi</argument> 
+						<argument>${docker.user}/service-template:${project.version}</argument> </arguments> 
+						</configuration> </execution> -->
 					<execution>
 						<id>docker-build</id>
 						<phase>install</phase>
@@ -104,42 +100,54 @@
 							</arguments>
 						</configuration>
 					</execution>
-					 <execution>
-      <id>docker-login</id>
-      <phase>install</phase>
-      <goals>
-        <goal>exec</goal>
-      </goals>
-      <configuration>
-        <executable>docker</executable>
-        <workingDirectory>${project.basedir}</workingDirectory>
-        <arguments>
-          <argument>login</argument>
-          <argument>-u</argument>
-          <argument>${docker.user}</argument>
-          <argument>-p</argument>
-          <argument>${docker.password}</argument>
-          <argument>${docker.url}</argument>
-        </arguments>
-      </configuration>
-    </execution>
-    <execution>
-      <id>docker-push</id>
-      <phase>install</phase>
-      <goals>
-        <goal>exec</goal>
-      </goals>
-      <configuration>
-        <executable>docker</executable>
-        <workingDirectory>${project.basedir}</workingDirectory>
-        <arguments>
-          <argument>push</argument>
-          <argument>${docker.user}/service-template:${project.version}</argument>
-        </arguments>
-      </configuration>
-    </execution>
+					<execution>
+						<id>docker-login</id>
+						<phase>install</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>docker</executable>
+							<workingDirectory>${project.basedir}</workingDirectory>
+							<arguments>
+								<argument>login</argument>
+								<argument>-u</argument>
+								<argument>${docker.user}</argument>
+								<argument>-p</argument>
+								<argument>${docker.password}</argument>
+								<argument>${docker.url}</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>docker-push</id>
+						<phase>install</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>docker</executable>
+							<workingDirectory>${project.basedir}</workingDirectory>
+							<arguments>
+								<argument>push</argument>
+								<argument>${docker.user}/service-template:${project.version}</argument>
+							</arguments>
+						</configuration>
+					</execution>
 				</executions>
 
+			</plugin>
+
+			<plugin>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-contract-maven-plugin</artifactId>
+				<version>2.2.4.RELEASE</version>
+				<extensions>true</extensions>
+				<configuration>
+					<baseClassForTests>
+						com.tech.msv.servicetemplate.ct.Provider
+					</baseClassForTests>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
